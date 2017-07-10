@@ -1,0 +1,5 @@
+tamara/tamara.py
+tamara.egg-info/PKG-INFO
+tamara.egg-info/SOURCES.txt
+tamara.egg-info/dependency_links.txt
+tamara.egg-info/top_level.txt
