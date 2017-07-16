@@ -24,12 +24,12 @@ class Home():
     """
 
     __SLEEP__ = 5
-    __PERIOD__ = 300
+    __PERIOD__ = 600
 
     def __init__(self):
         print("Am I home?")
         self.Tamara = Tamara()
-        self.users = self.Tamara.load_db()[0] #returns list
+        self.users = self.Tamara.load_db() #returns list
         self.beginningoftime = datetime.datetime(2017, 1,1, 0, 0, 0)
 
     def main(self):
@@ -82,8 +82,9 @@ class Home():
                 if (now - finish).total_seconds() > self.__PERIOD__:
                     print("action working")
                     self.action(self.users[i])
+                    nsession += 1
                 self.Tamara.save(user=user, status=1, start=now,
-                                 nsession=(nsession+1))
+                                 nsession=(nsession))
 
                 #Update database
             elif mac in output.decode("utf-8"):
@@ -95,7 +96,7 @@ class Home():
                 print("away", user)
                 self.Tamara.save(user=user, status=0, finish=now)
     def action(self, user):
-        print("ACTIONq  ")
+        print("action")
 
 
 if __name__ == "__main__":

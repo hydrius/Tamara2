@@ -28,13 +28,13 @@ class Tamara():
         print("Hello")
 
 
-    def load_db(self, database="tamaradb"):
+    def load_db(self, table='public.overview', database="tamaradb"):
         """ loads database given param and returns list """
 
         db = []
         self.conn = psycopg2.connect(host="192.168.1.70", dbname=database, user='tamara')
         cur = self.conn.cursor()
-        cur.execute('SELECT * FROM public."overview"')
+        cur.execute(f"SELECT * FROM {table}")
         self.db_vars = [x[0] for x in cur.description]
 
         db = cur.fetchall()
@@ -58,7 +58,7 @@ class Tamara():
 #                if line[i] is not None:
 #                    self.people[line[0]][db_vars[i]]
 
-    def save(self, user, table="public.overview", **kwargs):
+    def save(self, user, where="users", table="public.overview", **kwargs):
 
         string = ""
         for key, val in kwargs.items():
@@ -70,7 +70,7 @@ class Tamara():
         cur = conn.cursor()
 
         # log query as record
-        query = f"UPDATE {table} SET {string} WHERE users='{user}'"
+        query = f"UPDATE {table} SET {string} WHERE {where}='{user}'"
         print(query)
         cur.execute(query)
         conn.commit()
@@ -80,12 +80,28 @@ class Tamara():
         index = [i for i,x in enumerate(self.db_vars) if x == column]
         return index[0]
 
+    def ret_row(self, list1, name):
+        for i, item in enumerate(list1):
+            if name in item:
+                return item
 
-    def say(phrase):
-        self.tts.say(phrase)
+    def say(self, phrase):
+        self.tts.say(phrase, "en")
 
-    def play(filename):
+    def play(self, filename):
         self.tts.play(filename)
+
+
+    def online(self):
+        """
+        queries database and returns all who is online
+        """
+        query = 'SELECT * where status=1'
+        conn = psycopg2.connect(host="192.168.1.70", dbname="tamaradb", users='tamara')
+        cur = conn.cursor()
+        cur.execute(query)
+        row = cur.rowcount()
+        return row
 
 if __name__ == "__main__":
     tam = Tamara()

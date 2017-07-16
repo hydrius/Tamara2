@@ -10,22 +10,25 @@ class BongOn():
         self.tamara = Tamara()
 
         # Why does this require [0]???
-        self.users = self.tamara.load_db()[0]
+        self.modules = self.tamara.load_db(table='modules')
+        self.modules = self.tamara.ret_row(self.modules, 'fourtwenty')
+        print(self.modules)
+        self.status = self.modules[self.tamara.find_index("status")]
 
     def main(self):
 
         while True:
             now = datetime.datetime.now()
-
+            print(self.status)
             if now.hour == 16 and now.minute == 20:
-                if(switch == 0):
+                if(self.status == 0):
                     self.tamara.say("Happy 420")
-                    self.tamara.save(user="fourtwenty", table="public.modules", switch=1)
+                    self.tamara.save(user="fourtwenty", where="module", table="public.modules", status=1)
 
-            if now.hour == 12 and now.minute == 5:
-                    self.tamara.save(user="fourtwenty", table="public.modules", switch=0)
+            if now.hour == 12:
+                    self.tamara.save(user="fourtwenty", where="module", table="public.modules", switch=0)
 
-            time.sleep(__SLEEP__)
+            time.sleep(self.__SLEEP__)
 
 if __name__ == "__main__":
     bongon = BongOn()
