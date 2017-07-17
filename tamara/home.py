@@ -72,6 +72,9 @@ class Home():
             session = users[self.Tamara.find_index("session")]
             nsession = users[self.Tamara.find_index("nsession")]
 
+            speech = users[self.Tamara.find_index("EntrySpeech")]
+            media = users[self.Tamara.find_index("media")]
+
 
             now = datetime.datetime.now()
 
@@ -81,7 +84,7 @@ class Home():
                 print((now - finish).total_seconds())
                 if (now - finish).total_seconds() > self.__PERIOD__:
                     print("action working")
-                    self.action(self.users[i])
+                    self.action(self.users[i], media, speech)
                     nsession += 1
                 self.Tamara.save(user=user, status=1, start=now,
                                  nsession=(nsession))
@@ -95,7 +98,20 @@ class Home():
             elif not mac in output.decode("utf-8") and status > 0:
                 print("away", user)
                 self.Tamara.save(user=user, status=0, finish=now)
-    def action(self, user):
+
+    def action(self, user, media, speech):
+
+        if media is not None:
+            self.Tamara.play(media)
+        else:
+            print(media)
+
+        if speech is not None:
+            self.Tamara.say(speech)
+            print(speech)
+        else:
+            print(speech)
+
         print("action")
 
 
