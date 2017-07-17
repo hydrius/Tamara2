@@ -6,6 +6,7 @@ class BongOn():
 
     __SLEEP__ = 30
 
+
     def __init__(self):
         self.tamara = Tamara()
 

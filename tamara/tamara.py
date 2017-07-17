@@ -96,11 +96,11 @@ class Tamara():
         """
         queries database and returns all who is online
         """
-        query = 'SELECT * where status=1'
-        conn = psycopg2.connect(host="192.168.1.70", dbname="tamaradb", users='tamara')
+        query = 'SELECT * FROM public.overview where status>0'
+        conn = psycopg2.connect(host="192.168.1.70", dbname="tamaradb", user='tamara')
         cur = conn.cursor()
         cur.execute(query)
-        row = cur.rowcount()
+        row = cur.rowcount
         return row
 
 if __name__ == "__main__":
