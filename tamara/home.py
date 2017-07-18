@@ -1,3 +1,5 @@
+!#/usr/bin/python
+
 from tamara import Tamara # Use Module
 
 import datetime
@@ -65,8 +67,6 @@ class Home():
             mac = users[self.Tamara.find_index("mac")].lower()
             status = int(users[self.Tamara.find_index("status")])
 
-
-
             finish = users[self.Tamara.find_index("finish")]
             start = users[self.Tamara.find_index("start")]
             session = users[self.Tamara.find_index("session")]
@@ -74,7 +74,6 @@ class Home():
 
             speech = users[self.Tamara.find_index("EntrySpeech")]
             media = users[self.Tamara.find_index("media")]
-
 
             now = datetime.datetime.now()
 
@@ -92,7 +91,7 @@ class Home():
                 #Update database
             elif mac in output.decode("utf-8"):
                 print("still home ", user)
-                self.Tamara.save(user=user, status=2, session=((now-start).total_seconds()/60))
+                self.Tamara.save(user=user, status=2, session=(((now-start).total_seconds())/60))
                 #update status in database to 2
 
             elif not mac in output.decode("utf-8") and status > 0:
