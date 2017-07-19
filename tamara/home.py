@@ -99,7 +99,7 @@ class Home():
                 self.Tamara.save(user=user, status=0, finish=now)
 
     def action(self, user, media, speech):
-
+        time.sleep(120)
         if media is not None:
             self.Tamara.play(media)
         else:

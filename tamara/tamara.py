@@ -1,6 +1,7 @@
 import psycopg2
 from collections import defaultdict
 from tts import GoogleTTS
+import datetime
 
 class Tamara():
 
@@ -85,8 +86,11 @@ class Tamara():
             if name in item:
                 return item
 
-    def say(self, phrase):
-        self.tts.say(phrase, "en")
+    def say(self, phrase,, override=False):
+        now = datetime.datetime.now()
+        if (now.hour > 8 and now.hour < 22) or override=True:
+            self.tts.say(phrase, "en")
+
 
     def play(self, filename):
         self.tts.play(filename)
