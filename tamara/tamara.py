@@ -86,9 +86,9 @@ class Tamara():
             if name in item:
                 return item
 
-    def say(self, phrase,, override=False):
+    def say(self, phrase, override=False):
         now = datetime.datetime.now()
-        if (now.hour > 8 and now.hour < 22) or override=True:
+        if (now.hour > 8 and now.hour < 21) or override==True:
             self.tts.say(phrase, "en")
 
 
