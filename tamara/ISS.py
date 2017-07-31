@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import datetime
 import time
 import requests
@@ -53,3 +55,9 @@ class SpaceStationNotifier():
                     if flyover_epoch - now_epoch < 10 and flyover_epoch - now_epoch > 0 and self.hasRun == True:
                         seconds = int(flyover_epoch - now_epoch)
                         self.Tamara.say(f"{seconds} until international space station flies over")
+            time.sleep(self.__SLEEP__)
+
+
+if __name__ == "__main__":
+    x = SpaceStationNotifier()
+    x.run()
