@@ -11,6 +11,8 @@ class SpaceStationNotifier():
     __SLEEP__ = 5
 
     def __init__(self):
+
+        self.Tamara = Tamara()
         self.hasRun = False
         self.dailyReload = False
         self.Tamara.__logger__("SpaceStationNotifier is online")
