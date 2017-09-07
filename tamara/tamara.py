@@ -33,13 +33,19 @@ class Tamara():
         """ loads database given param and returns list """
 
         db = []
-        self.conn = psycopg2.connect(host="192.168.1.70", dbname=database, user='tamara')
-        cur = self.conn.cursor()
-        cur.execute(f"SELECT * FROM {table}")
-        self.db_vars = [x[0] for x in cur.description]
+        try:
+            self.conn = psycopg2.connect(host="192.168.1.70", dbname=database, user='tamara')
+            cur = self.conn.cursor()
+            cur.execute(f"SELECT * FROM {table}")
+            self.db_vars = [x[0] for x in cur.description]
 
-        db = cur.fetchall()
-        self.conn.close()
+            db = cur.fetchall()
+            self.conn.close()
+
+        except:
+            pass
+
+
         return db
 
     def sort_db(self, db):
