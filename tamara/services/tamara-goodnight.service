@@ -1,0 +1,9 @@
+[Unit]
+Description="Tamara Space Notifier"
+After="network.target"
+
+[Service]
+ExecStart="/usr/bin/local/tamara/ISS.py"
+
+[Install]
+WantedBy=multi-user.target

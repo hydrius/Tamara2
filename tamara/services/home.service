@@ -1,0 +1,9 @@
+[Unit]
+Description="Tamara home"
+After="network.target"
+
+[Service]
+ExecStart="/usr/bin/local/tamara/home.py"
+
+[Install]
+WantedBy=multi-user.target

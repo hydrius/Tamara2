@@ -29,19 +29,18 @@ class Home():
     __PERIOD__ = 600
 
     def __init__(self):
-        print("Am I home?")
+
         self.Tamara = Tamara()
+        self.Tamara.__logger__("Am I Home?")
         self.users = self.Tamara.load_db() #returns list
         self.beginningoftime = datetime.datetime(2017, 1,1, 0, 0, 0)
 
     def main(self):
         """ Main function. Loops run forever """
-
-
         while True:
             # How fast is the call to the db?
             self.users = self.Tamara.load_db()
-            print(self.users)
+            #print(self.users)
             # How long does this function take?
             self.run()
             time.sleep(self.__SLEEP__)
@@ -79,29 +78,31 @@ class Home():
 
             # If online and previous status offline
             if mac in output.decode("utf-8") and status == 0:
-                print("home ",user)
-                print((now - finish).total_seconds())
+                secondsOffline = (now - finish).total_seconds()
+                self.Tamara.__logger__(f"home {user}: Offline total seconds: {secondsOffline}")
+
                 if (now - finish).total_seconds() > self.__PERIOD__:
-                    print("action working")
                     self.action(self.users[i], media, speech)
+
                     nsession += 1
                 self.Tamara.save(user=user, status=1, start=now,
                                  nsession=(nsession))
 
-                #Update database
+            #Update database
             elif mac in output.decode("utf-8"):
-                print("still home ", user)
-                self.Tamara.save(user=user, status=2, session=(((now-start).total_seconds())/60))
+                self.Tamara.save(user=user, status=2, session=((now-start).total_seconds()))
                 #update status in database to 2
 
             elif not mac in output.decode("utf-8") and status > 0:
-                print("away", user)
                 self.Tamara.save(user=user, status=0, finish=now)
 
+
     def action(self, user, media, speech):
-        time.sleep(120)
+        self.Tamara.__logger__(f"{user}, {media}, {speech}")
+        time.sleep(30)
         if media is not None:
             self.Tamara.play(media)
+            print(media)
         else:
             print(media)
 
@@ -110,8 +111,6 @@ class Home():
             print(speech)
         else:
             print(speech)
-
-        print("action")
 
 
 if __name__ == "__main__":

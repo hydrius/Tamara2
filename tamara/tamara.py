@@ -6,31 +6,42 @@ import datetime
 class Tamara():
 
     """
-        Handles data from the database
-
-
+        Handles data from the db.
     """
 
-
     def __init__(self):
-        print("init")
 
         self.tts = GoogleTTS()
+
+        # Why did I do this again? Why a vanilla dictionary?
+
         self.people = [0]
         self.people[0] = defaultdict(lambda: 'Vanilla')
         #defaultdict(self.people)
         #self.people = {}
 
+        self.__logger__("Loading database")
         self.db = self.load_db()
         #self.sort_db(self.db)
+
+    def __logger__(self, log, verbose=1):
+
+        if verbose == 1:
+            print(log)
+        elif verbose <= 2:
+            print(log)
+        elif verbose <= 3:
+            print(log)
 
 
     def main(self):
         print("Hello")
 
-
     def load_db(self, table='public.overview', database="tamaradb"):
-        """ loads database given param and returns list """
+        """ loads database given param and returns list
+            - table='overview'
+            - database='tamaradb'
+        """
 
         db = []
         try:
@@ -42,15 +53,15 @@ class Tamara():
             db = cur.fetchall()
             self.conn.close()
 
-        except:
+        except Exception as e:
+            self.__logger__(e)
             pass
-
 
         return db
 
     def sort_db(self, db):
         """
-            Sorts db into a dictionary: Success but do I need to impletement?
+            Sorts db into a dictionary: Success but does not need to be implement?
         """
 
         #self.db_vars = ["Name", "MAC", "status", "last"]
@@ -72,22 +83,27 @@ class Tamara():
             string+=f"{key}='{val}', "
 
         string = string[:-2]
-
-        conn = psycopg2.connect(host="192.168.1.70", dbname="tamaradb", user='tamara')
-        cur = conn.cursor()
+        try:
+            conn = psycopg2.connect(host="192.168.1.70", dbname="tamaradb", user='tamara')
+            cur = conn.cursor()
 
         # log query as record
-        query = f"UPDATE {table} SET {string} WHERE {where}='{user}'"
-        print(query)
-        cur.execute(query)
-        conn.commit()
-        cur.close()
+            query = f"UPDATE {table} SET {string} WHERE {where}='{user}'"
+            self.__logger__(query)
+            cur.execute(query)
+            conn.commit()
+            cur.close()
+        except:
+            pass
 
     def find_index(self, column):
         index = [i for i,x in enumerate(self.db_vars) if x == column]
+        #self.__logger__(f"{column} is located on index: {index}")
         return index[0]
 
     def ret_row(self, list1, name):
+        """ What does this do """
+        self.__logger__(f"{list1} and {name}")
         for i, item in enumerate(list1):
             if name in item:
                 return item
