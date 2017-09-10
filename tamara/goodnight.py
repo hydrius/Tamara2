@@ -15,7 +15,7 @@ class GoodMorningAndGoodNight():
                     self.Tamara.say("Good. night. sluts", override=True)
                     status = 0
                 elif now.hour == 9 and now.minute == 0:
-                    self.Tamara.say("Good. Morning. Coffee?", override=True)
+                    self.Tamara.say("Good. Morning. Where is my Coffee?", override=True)
                     status = 0
             if now.hour == 12 or now.hour == 7:
                 status = 1

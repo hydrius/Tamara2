@@ -87,7 +87,7 @@ class Tamara():
             conn = psycopg2.connect(host="192.168.1.70", dbname="tamaradb", user='tamara')
             cur = conn.cursor()
 
-        # log query as record
+            # log query as record
             query = f"UPDATE {table} SET {string} WHERE {where}='{user}'"
             self.__logger__(query)
             cur.execute(query)
